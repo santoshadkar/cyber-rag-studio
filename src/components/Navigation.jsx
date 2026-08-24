@@ -22,12 +22,13 @@ export default function Navigation({
 }) {
   const tabs = [
     { id: "overview", label: "Overview & Getting Started", icon: BookOpen, color: "from-blue-500 to-cyan-500" },
-    { id: "workbench", label: "Threat RAG Workbench", icon: ShieldCheck, color: "from-cyan-500 to-blue-600" },
+    { id: "workbench", label: "Cyber & Agile RAG Workbench", icon: ShieldCheck, color: "from-cyan-500 to-blue-600" },
     { id: "arena", label: "LLM vs SLM Arena", icon: GitCompare, color: "from-purple-500 to-pink-600" },
     { id: "notebook", label: "NotebookLLM Studio", icon: Radio, color: "from-emerald-400 to-teal-600" },
     { id: "chunking", label: "Chunking & Token Lab", icon: Layers, color: "from-amber-400 to-orange-600" },
     { id: "vectorspace", label: "Vector Space Canvas", icon: Database, color: "from-indigo-500 to-purple-600" }
   ];
+
 
   const domains = [
     { id: "all", label: "⚡ All Knowledge Domains" },

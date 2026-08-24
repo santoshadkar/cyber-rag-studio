@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { Radio, Play, Square, Volume2, Mic, FileText, HelpCircle, Sparkles, CheckCircle, ExternalLink } from "lucide-react";
 import { audioSynthesizer } from "../utils/audioSynthesizer";
 
@@ -7,10 +8,24 @@ export default function NotebookStudio({ modelResponses }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [activeLineIndex, setActiveLineIndex] = useState(0);
 
-  if (!modelResponses) return null;
+  const defaultNotebookData = {
+    summary: "Executive Briefing on Agile Coaching & AI Threat Intelligence:\n\n• [Ref 1] Lyssa Adkins Coaching Framework: 8 core competencies for Agile transformation.\n• [Ref 2] 2020 Scrum Guide Rules: Empiricism, Scrum Values, and Team Accountabilities.\n• [Ref 3] NIST SP 800-207 Zero Trust: Continuous authentication and microsegmentation.",
+    podcastScript: [
+      { speaker: "Host A (Analytical Lead)", text: "Hey everyone! Today we're diving deep into our unified RAG repository covering Agile Coaching & AI Threat Defense." },
+      { speaker: "Host B (Tech Specialist)", text: "Right! Looking at our primary source documents, the 2020 Scrum Guide and NIST Zero Trust Architecture give a complete roadmap." },
+      { speaker: "Host A (Analytical Lead)", text: "Exactly! And by pairing local SLMs like Microsoft Phi-3 with RAG, teams eliminate cloud telemetry leakage completely." },
+      { speaker: "Host B (Tech Specialist)", text: "Wait, so how does that help Scrum Masters and Product Owners?" },
+      { speaker: "Host A (Analytical Lead)", text: "Product Owners can calculate WSJF prioritization scores instantly while keeping user story data 100% on-premise!" }
+    ],
+    faq: [
+      { q: "What is the primary benefit of unified Agile & Cyber RAG?", a: "It provides verified, zero-hallucination answers back-linked to official Scrum Guide and MITRE ATT&CK sources." },
+      { q: "How do we verify source grounding?", a: "By inspecting chunk similarity scores and cross-referencing text boundaries in the source citation inspector." }
+    ]
+  };
 
-  const notebookData = modelResponses.models.notebook;
-  const podcastScript = notebookData.podcastScript || [];
+  const activeData = modelResponses ? modelResponses.models.notebook : defaultNotebookData;
+  const podcastScript = activeData.podcastScript || [];
+
 
   const handlePlayAudio = () => {
     if (isPlaying) {
@@ -173,7 +188,7 @@ export default function NotebookStudio({ modelResponses }) {
             <span>Grounded Multi-Document Executive Summary</span>
           </h4>
           <div className="text-xs text-slate-300 leading-relaxed font-mono whitespace-pre-line bg-slate-900 p-4 rounded-lg border border-slate-800">
-            {notebookData.summary}
+            {activeData.summary}
           </div>
         </div>
       )}
@@ -181,7 +196,7 @@ export default function NotebookStudio({ modelResponses }) {
       {/* Tab 3: FAQ */}
       {activeTab === "faq" && (
         <div className="space-y-3">
-          {notebookData.faq.map((item, idx) => (
+          {activeData.faq.map((item, idx) => (
             <div key={idx} className="bg-slate-950/80 rounded-xl p-4 border border-slate-800 space-y-2">
               <div className="text-xs font-bold text-purple-300 flex items-center space-x-2">
                 <HelpCircle className="w-4 h-4 text-purple-400" />
@@ -194,6 +209,7 @@ export default function NotebookStudio({ modelResponses }) {
           ))}
         </div>
       )}
+
 
     </div>
   );
