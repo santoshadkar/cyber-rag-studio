@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "./components/Navigation";
+import OverviewPage from "./components/OverviewPage";
 import CyberThreatWorkbench from "./components/CyberThreatWorkbench";
 import ModelArena from "./components/ModelArena";
 import NotebookStudio from "./components/NotebookStudio";
@@ -10,7 +11,7 @@ import { executeRAGQuery, generateModelResponses } from "./utils/ragEngine";
 import { ShieldCheck, Cpu, Database, Radio, Layers, Sparkles, Terminal, Activity } from "lucide-react";
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState("workbench");
+  const [activeTab, setActiveTab] = useState("overview");
   const [selectedDomain, setSelectedDomain] = useState("all");
   const [query, setQuery] = useState(
     "How to prevent Prompt Injection & RAG Poisoning in enterprise cybersecurity pipelines?"
@@ -112,6 +113,14 @@ export default function App() {
           </div>
         </div>
 
+        {/* Tab 0: Overview & Getting Started */}
+        {activeTab === "overview" && (
+          <OverviewPage
+            onNavigateTab={(tabId) => setActiveTab(tabId)}
+            onOpenIngest={() => setIsIngestOpen(true)}
+          />
+        )}
+
         {/* Tab 1: Cybersecurity & AI Threat Workbench */}
         {activeTab === "workbench" && (
           <CyberThreatWorkbench
@@ -151,6 +160,7 @@ export default function App() {
             query={query}
           />
         )}
+
 
       </main>
 

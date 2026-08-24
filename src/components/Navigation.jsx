@@ -9,7 +9,8 @@ import {
   Sparkles,
   Zap,
   PlusCircle,
-  FileText
+  FileText,
+  BookOpen
 } from "lucide-react";
 
 export default function Navigation({ 
@@ -20,6 +21,7 @@ export default function Navigation({
   onOpenIngest
 }) {
   const tabs = [
+    { id: "overview", label: "Overview & Getting Started", icon: BookOpen, color: "from-blue-500 to-cyan-500" },
     { id: "workbench", label: "Threat RAG Workbench", icon: ShieldCheck, color: "from-cyan-500 to-blue-600" },
     { id: "arena", label: "LLM vs SLM Arena", icon: GitCompare, color: "from-purple-500 to-pink-600" },
     { id: "notebook", label: "NotebookLLM Studio", icon: Radio, color: "from-emerald-400 to-teal-600" },
@@ -41,7 +43,8 @@ export default function Navigation({
         <div className="flex items-center justify-between h-16">
           
           {/* Logo & Branding */}
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveTab("workbench")}>
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveTab("overview")}>
+
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-600 p-0.5 shadow-lg shadow-cyan-500/20">
               <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
                 <ShieldCheck className="w-6 h-6 text-cyan-400 animate-pulse" />
