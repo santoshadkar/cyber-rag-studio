@@ -37,16 +37,17 @@ export default function OverviewPage({ onNavigateTab, onOpenIngest }) {
         <div className="relative z-10 space-y-6 max-w-3xl">
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold">
             <Sparkles className="w-4 h-4 animate-pulse" />
-            <span>Welcome to CyberRAG Studio</span>
+            <span>Welcome to Cyber & Agile RAG Studio</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            Master <span className="bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">Retrieval-Augmented Generation</span> for AI & Cybersecurity
+            Master <span className="bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">Retrieval-Augmented Generation</span> for AI, Cybersecurity & Agile
           </h1>
 
           <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-            CyberRAG Studio is an interactive learning, architectural design, and simulation platform designed to demonstrate how RAG bridges Large Language Models (LLMs), Edge Small Language Models (SLMs), NotebookLLMs, and Enterprise Cybersecurity Threat Intelligence.
+            Cyber & Agile RAG Studio is your single one-stop interactive portal designed to demonstrate how RAG bridges Large Language Models (LLMs), Edge Small Language Models (SLMs), NotebookLLMs, Enterprise Cybersecurity Threat Intelligence, AND Agile Coaching & Product Management.
           </p>
+
 
           {/* Call to Action Buttons */}
           <div className="flex flex-wrap items-center gap-3 pt-2">

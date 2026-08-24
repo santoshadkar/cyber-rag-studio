@@ -34,7 +34,8 @@ export default function Navigation({
     { id: "cybersecurity", label: "🛡️ Cybersecurity Threat Intel" },
     { id: "aiSecurity", label: "🔒 AI & LLM Security" },
     { id: "slmVsLlm", label: "⚡ SLMs vs LLMs Architecture" },
-    { id: "notebookLlm", label: "🎙️ NotebookLLM Studio" }
+    { id: "notebookLlm", label: "🎙️ NotebookLLM Studio" },
+    { id: "agileCoach", label: "🚀 Agile Coaching & Scrum Mastery" }
   ];
 
   return (
@@ -53,17 +54,18 @@ export default function Navigation({
             <div>
               <div className="flex items-center space-x-2">
                 <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
-                  CyberRAG Studio
+                  Cyber & Agile RAG Studio
                 </span>
                 <span className="px-2 py-0.5 text-[10px] font-semibold bg-cyan-950/80 text-cyan-400 border border-cyan-500/30 rounded-full">
-                  v2.5 Hybrid
+                  v3.0 All-In-One
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 font-medium hidden sm:block">
-                AI · LLMs · SLMs · NotebookLLM · Cybersecurity Intelligence
+                AI · LLMs · SLMs · NotebookLLM · Cybersecurity · Agile Coaching
               </p>
             </div>
           </div>
+
 
           {/* Center Domain Knowledge Selector */}
           <div className="hidden lg:flex items-center space-x-2">

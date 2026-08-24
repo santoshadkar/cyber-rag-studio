@@ -2,6 +2,7 @@ import { cybersecurityKnowledge } from "../data/cybersecurityKnowledge";
 import { aiSecurityKnowledge } from "../data/aiSecurityKnowledge";
 import { slmVsLlmKnowledge } from "../data/slmVsLlmKnowledge";
 import { notebookLlmKnowledge } from "../data/notebookLlmKnowledge";
+import { agileKnowledge } from "../data/agileKnowledge";
 import { tokenize, getTF, cosineSimilarity } from "./vectorMath";
 
 // Helper to strip double asterisks (**) from text
@@ -14,8 +15,10 @@ export const ALL_DOMAINS = {
   cybersecurity: { name: "Cybersecurity Threat Intel", data: cybersecurityKnowledge, badge: "CYBER" },
   aiSecurity: { name: "AI & LLM Security", data: aiSecurityKnowledge, badge: "AI-SEC" },
   slmVsLlm: { name: "SLMs vs LLMs Architecture", data: slmVsLlmKnowledge, badge: "SLM/LLM" },
-  notebookLlm: { name: "NotebookLLM Studio", data: notebookLlmKnowledge, badge: "NOTEBOOK" }
+  notebookLlm: { name: "NotebookLLM Studio", data: notebookLlmKnowledge, badge: "NOTEBOOK" },
+  agileCoach: { name: "Agile Coaching & Scrum Mastery", data: agileKnowledge, badge: "AGILE" }
 };
+
 
 
 // Chunk text according to size and overlap settings

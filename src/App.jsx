@@ -23,10 +23,12 @@ export default function App() {
 
   const presetQueries = [
     "How to prevent Prompt Injection & RAG Poisoning?",
+    "How to calculate WSJF prioritization score in SAFe?",
     "Compare SLMs (Phi-3, Gemma) vs Cloud LLMs (GPT-4o)",
-    "OWASP LLM Top 10 vulnerabilities & MITRE ATT&CK T1190",
-    "Zero Trust Architecture NIST SP 800-207 guidelines"
+    "Explain 1-2-4-All Liberating Structure for Retrospectives",
+    "OWASP LLM Top 10 vulnerabilities & MITRE ATT&CK T1190"
   ];
+
 
   // Execute RAG Search
   const handleExecuteQuery = () => {
