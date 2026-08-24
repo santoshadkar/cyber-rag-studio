@@ -67,21 +67,22 @@ export default function Navigation({
           </div>
 
 
-          {/* Center Domain Knowledge Selector */}
-          <div className="hidden lg:flex items-center space-x-2">
-            <span className="text-xs text-slate-400 font-medium">Domain:</span>
+          {/* Center Domain Knowledge Selector (Visible on ALL devices) */}
+          <div className="flex items-center space-x-2 bg-slate-900/90 px-3 py-1.5 rounded-xl border border-cyan-500/30">
+            <span className="text-xs text-cyan-400 font-bold hidden sm:inline">Domain:</span>
             <select
               value={selectedDomain}
               onChange={(e) => setSelectedDomain(e.target.value)}
-              className="bg-slate-900 border border-slate-700/80 text-slate-200 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-cyan-500 cursor-pointer font-medium hover:border-slate-600 transition"
+              className="bg-transparent text-slate-100 text-xs focus:outline-none cursor-pointer font-semibold"
             >
               {domains.map((d) => (
-                <option key={d.id} value={d.id}>
+                <option key={d.id} value={d.id} className="bg-slate-900 text-slate-100">
                   {d.label}
                 </option>
               ))}
             </select>
           </div>
+
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-3">
