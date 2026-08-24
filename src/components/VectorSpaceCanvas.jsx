@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { projectTo2D, cosineSimilarity, euclideanDistance } from "../utils/vectorMath";
+import { executeRAGQuery } from "../utils/ragEngine";
 import { Database, Compass, Eye, Sparkles, Filter } from "lucide-react";
 
 export default function VectorSpaceCanvas({ ragResult, query }) {
@@ -7,9 +8,19 @@ export default function VectorSpaceCanvas({ ragResult, query }) {
   const [hoveredNode, setHoveredNode] = useState(null);
   const [metricType, setMetricType] = useState("cosine"); // cosine or euclidean
 
+  // Fallback to default RAG vector result if no search query executed yet
+  const defaultRagResult = executeRAGQuery(
+    "Agile Coaching, Scrum Mastery & AI Security Architecture",
+    "all",
+    { topK: 3, strategy: "hybrid", chunkSize: 280, overlap: 40 }
+  );
+
+  const activeRagResult = ragResult || defaultRagResult;
+  const activeQuery = query || "Agile Coaching & AI Security Embedding Vectors";
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || !ragResult) return;
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
     let animationFrameId;
@@ -21,6 +32,7 @@ export default function VectorSpaceCanvas({ ragResult, query }) {
 
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
+
 
       // Draw background vector space grid & concentric similarity circles
       ctx.strokeStyle = "rgba(30, 41, 59, 0.6)";
@@ -73,11 +85,11 @@ export default function VectorSpaceCanvas({ ragResult, query }) {
       ctx.fillText("Search Vector (Query)", centerX, centerY - 14);
 
       // Process and plot document chunk nodes
-      const chunks = ragResult.allChunks || [];
-      const topIds = new Set((ragResult.topChunks || []).map((c) => c.id));
+      const chunks = activeRagResult.allChunks || [];
+      const topIds = new Set((activeRagResult.topChunks || []).map((c) => c.id));
 
       chunks.forEach((chunk, i) => {
-        const proj = projectTo2D(chunk, ragResult.queryVector, i, chunks.length);
+        const proj = projectTo2D(chunk, activeRagResult.queryVector, i, chunks.length);
         const nodeX = centerX + proj.x;
         const nodeY = centerY + proj.y;
 
@@ -132,12 +144,12 @@ export default function VectorSpaceCanvas({ ragResult, query }) {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [ragResult, hoveredNode]);
+  }, [activeRagResult, hoveredNode]);
 
   // Handle Mouse Move for tooltips
   const handleMouseMove = (e) => {
     const canvas = canvasRef.current;
-    if (!canvas || !ragResult) return;
+    if (!canvas || !activeRagResult) return;
     const rect = canvas.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
@@ -145,11 +157,11 @@ export default function VectorSpaceCanvas({ ragResult, query }) {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
 
-    const chunks = ragResult.allChunks || [];
+    const chunks = activeRagResult.allChunks || [];
     let found = null;
 
     chunks.forEach((chunk, i) => {
-      const proj = projectTo2D(chunk, ragResult.queryVector, i, chunks.length);
+      const proj = projectTo2D(chunk, activeRagResult.queryVector, i, chunks.length);
       const nodeX = centerX + proj.x;
       const nodeY = centerY + proj.y;
 
@@ -161,6 +173,7 @@ export default function VectorSpaceCanvas({ ragResult, query }) {
 
     setHoveredNode(found);
   };
+
 
   return (
     <div className="bg-slate-900/90 rounded-2xl border border-slate-800 p-5 shadow-2xl relative">
@@ -249,8 +262,9 @@ export default function VectorSpaceCanvas({ ragResult, query }) {
           </div>
         </div>
         <div className="font-mono text-[11px] text-slate-500">
-          Total Indexed Vectors: {ragResult?.totalChunksScored || 0}
+          Total Indexed Vectors: {activeRagResult?.totalChunksScored || 0}
         </div>
+
       </div>
     </div>
   );
