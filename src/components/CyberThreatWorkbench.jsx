@@ -1,6 +1,7 @@
 import React from "react";
 import { ShieldAlert, Search, Sparkles, ExternalLink, Hash, Bookmark, ArrowRight, CheckCircle } from "lucide-react";
 import { cleanText } from "../utils/ragEngine";
+import { DOMAIN_QUICK_PROMPTS } from "../App";
 
 export default function CyberThreatWorkbench({ 
   query, 
@@ -8,7 +9,6 @@ export default function CyberThreatWorkbench({
   onExecuteQuery, 
   ragResult, 
   modelResponses, 
-  presetQueries,
   selectedDomain,
   setSelectedDomain
 }) {
@@ -21,6 +21,19 @@ export default function CyberThreatWorkbench({
     { id: "notebookLlm", label: "🎙️ NotebookLLM Studio" }
   ];
 
+  const currentQuickPrompts = DOMAIN_QUICK_PROMPTS[selectedDomain] || DOMAIN_QUICK_PROMPTS.all;
+
+  const getPlaceholder = () => {
+    switch(selectedDomain) {
+      case "agileCoach": return "Ask about Scrum Guide rules, SAFe WSJF score, Lyssa Adkins competencies, or retrospectives...";
+      case "cybersecurity": return "Ask about MITRE ATT&CK, CVE vulnerabilities, NIST Zero Trust, or Ransomware playbooks...";
+      case "aiSecurity": return "Ask about Prompt Injection defense, OWASP LLM Top 10, or RAG Poisoning...";
+      case "slmVsLlm": return "Ask about Microsoft Phi-3, Gemma 2B, 4-bit GGUF quantization, or air-gapped security...";
+      case "notebookLlm": return "Ask about zero-hallucination source grounding, audio overview podcast scripts, or FAQs...";
+      default: return "Ask any question about Agile Coaching, Scrum, AI Security, SLMs, or Cybersecurity...";
+    }
+  };
+
   return (
     <div className="space-y-6">
       
@@ -32,7 +45,7 @@ export default function CyberThreatWorkbench({
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Select RAG Knowledge Domain:</span>
             <span className="text-[11px] text-cyan-400 font-mono font-bold">
-              Active: {domainButtons.find(d => d.id === selectedDomain)?.label || "⚡ All Knowledge"}
+              Active Domain: {domainButtons.find(d => d.id === selectedDomain)?.label || "⚡ All Knowledge"}
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -42,7 +55,7 @@ export default function CyberThreatWorkbench({
                 <button
                   key={db.id}
                   onClick={() => setSelectedDomain(db.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer ${
                     isActive
                       ? "bg-cyan-500 text-slate-950 shadow-cyan-500/20"
                       : "bg-slate-950 text-slate-300 border border-slate-800 hover:border-slate-700 hover:text-white"
@@ -65,7 +78,6 @@ export default function CyberThreatWorkbench({
           </span>
         </div>
 
-
         {/* Input Bar */}
         <div className="relative flex items-center">
           <input
@@ -73,11 +85,11 @@ export default function CyberThreatWorkbench({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && onExecuteQuery()}
-            placeholder="Ask a question about MITRE ATT&CK, OWASP LLM risks, CVE vulnerabilities, or SLMs vs LLMs..."
+            placeholder={getPlaceholder()}
             className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-4 pr-32 py-3.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-sans shadow-inner"
           />
           <button
-            onClick={onExecuteQuery}
+            onClick={() => onExecuteQuery()}
             className="absolute right-2 px-5 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/20 transition flex items-center space-x-1.5 cursor-pointer"
           >
             <Search className="w-4 h-4" />
@@ -85,23 +97,26 @@ export default function CyberThreatWorkbench({
           </button>
         </div>
 
-        {/* Quick Presets */}
-        <div className="flex flex-wrap items-center gap-2 pt-1">
-          <span className="text-xs text-slate-400 font-medium">Quick Prompts:</span>
-          {presetQueries.map((pq, idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                setQuery(pq);
-                setTimeout(onExecuteQuery, 50);
-              }}
-              className="text-xs bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-cyan-300 border border-slate-800 hover:border-cyan-500/40 px-3 py-1 rounded-lg transition font-medium flex items-center space-x-1"
-            >
-              <span>{pq}</span>
-            </button>
-          ))}
+        {/* Dynamic Domain Quick Prompts */}
+        <div className="space-y-1.5 pt-1">
+          <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
+            <span>Click a Quick Prompt for <strong className="text-cyan-400">{domainButtons.find(d => d.id === selectedDomain)?.label}</strong>:</span>
+            <span className="text-[10px] text-slate-500 font-mono">{currentQuickPrompts.length} prompts available</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {currentQuickPrompts.map((pq, idx) => (
+              <button
+                key={idx}
+                onClick={() => onExecuteQuery(pq)}
+                className="text-xs bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-cyan-300 border border-slate-800 hover:border-cyan-500/40 px-3 py-1.5 rounded-lg transition font-medium flex items-center space-x-1 cursor-pointer"
+              >
+                <span>{pq}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+
 
       {/* Results Section */}
       {modelResponses && (
