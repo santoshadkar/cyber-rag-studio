@@ -20,11 +20,21 @@ import {
   Search,
   Check,
   ChevronRight,
-  Workflow
+  Workflow,
+  Globe,
+  TrendingUp,
+  Flame,
+  Compass,
+  Rocket
 } from "lucide-react";
 
-export default function OverviewPage({ onNavigateTab, onOpenIngest }) {
+export default function OverviewPage({ onNavigateTab, setSelectedDomain, onOpenIngest }) {
   const [activeParadigm, setActiveParadigm] = useState("naive");
+
+  const handleLaunchAgileRAG = () => {
+    if (setSelectedDomain) setSelectedDomain("agileCoach");
+    onNavigateTab("workbench");
+  };
 
   return (
     <div className="space-y-10 py-2">
@@ -48,16 +58,23 @@ export default function OverviewPage({ onNavigateTab, onOpenIngest }) {
             Cyber & Agile RAG Studio is your single one-stop interactive portal designed to demonstrate how RAG bridges Large Language Models (LLMs), Edge Small Language Models (SLMs), NotebookLLMs, Enterprise Cybersecurity Threat Intelligence, AND Agile Coaching & Product Management.
           </p>
 
-
           {/* Call to Action Buttons */}
           <div className="flex flex-wrap items-center gap-3 pt-2">
+            <button
+              onClick={handleLaunchAgileRAG}
+              className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-600 hover:from-emerald-300 hover:to-teal-500 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/25 transition flex items-center space-x-2 cursor-pointer"
+            >
+              <Rocket className="w-4 h-4" />
+              <span>Launch Agile & Scrum RAG</span>
+              <ArrowRight className="w-4 h-4 ml-1" />
+            </button>
+
             <button
               onClick={() => onNavigateTab("workbench")}
               className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/25 transition flex items-center space-x-2 cursor-pointer"
             >
               <ShieldCheck className="w-4 h-4" />
-              <span>Launch Threat Workbench</span>
-              <ArrowRight className="w-4 h-4 ml-1" />
+              <span>Threat RAG Workbench</span>
             </button>
 
             <button
@@ -65,18 +82,36 @@ export default function OverviewPage({ onNavigateTab, onOpenIngest }) {
               className="px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-xs transition flex items-center space-x-2 cursor-pointer"
             >
               <Zap className="w-4 h-4 text-purple-400" />
-              <span>Test LLMs vs SLMs Arena</span>
-            </button>
-
-            <button
-              onClick={() => onNavigateTab("notebook")}
-              className="px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-xs transition flex items-center space-x-2 cursor-pointer"
-            >
-              <Radio className="w-4 h-4 text-emerald-400" />
-              <span>Listen to Notebook Audio Overview</span>
+              <span>LLMs vs SLMs Arena</span>
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Featured Banner: Agile Coaching & Scrum Mastery One-Stop Integration */}
+      <div className="bg-gradient-to-r from-emerald-950/60 via-slate-900 to-teal-950/60 p-6 rounded-2xl border border-emerald-500/40 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+        <div className="space-y-2">
+          <div className="flex items-center space-x-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold uppercase tracking-wider border border-emerald-500/30">
+              FEATURED DOMAIN INTEGRATION
+            </span>
+            <span className="text-xs text-slate-400 font-mono">100% Grounded</span>
+          </div>
+          <h3 className="text-xl font-bold text-slate-100 flex items-center space-x-2">
+            <span>🚀 Agile Coaching, Scrum Mastery & Product Ownership RAG</span>
+          </h3>
+          <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
+            Full reference corpus integrated! Query Lyssa Adkins Coaching Framework, Patrick Lencioni's 5 Dysfunctions, WSJF & RICE Prioritization, 2020 Scrum Guide Rules, XP Engineering TDD/CI-CD, and Liberating Structures.
+          </p>
+        </div>
+
+        <button
+          onClick={handleLaunchAgileRAG}
+          className="px-6 py-3 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-bold text-xs transition shadow-lg shadow-emerald-400/20 whitespace-nowrap cursor-pointer flex items-center space-x-2"
+        >
+          <span>Query Agile Knowledge Base</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
 
       {/* Section 1: What is RAG? (Core Concept) */}
@@ -92,11 +127,104 @@ export default function OverviewPage({ onNavigateTab, onOpenIngest }) {
         <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
           Standard AI models (like GPT-4 or Claude) generate responses based solely on what they learned during training. While powerful, they can suffer from <strong>hallucinations</strong> (inventing false details) and lack knowledge of proprietary or real-time enterprise documents.
           <br /><br />
-          <strong>RAG solves this by introducing a 2-step process:</strong> First, it <em>retrieves</em> exact relevant passages from a trusted knowledge base (such as MITRE ATT&CK logs, OWASP security standards, or CVE databases). Second, it feeds these exact passages into the language model to <em>generate</em> a verified, source-cited answer.
+          <strong>RAG solves this by introducing a 2-step process:</strong> First, it <em>retrieves</em> exact relevant passages from a trusted knowledge base (such as MITRE ATT&CK logs, OWASP security standards, or Agile frameworks). Second, it feeds these exact passages into the language model to <em>generate</em> a verified, source-cited answer.
         </p>
       </div>
 
-      {/* Section 2: Complete End-to-End RAG Architecture Diagram */}
+      {/* Section 2: Latest Innovations in RAG & Evolution Timeline */}
+      <div className="bg-slate-900/80 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6 shadow-xl">
+        <div className="flex items-center space-x-3 border-b border-slate-800 pb-4">
+          <TrendingUp className="w-6 h-6 text-purple-400" />
+          <div>
+            <h2 className="text-xl font-bold text-slate-100">Latest Innovations & Evolution of RAG (2020 ➔ 2026+)</h2>
+            <p className="text-xs text-slate-400">How RAG evolved from basic vector lookup to GraphRAG, Agentic Self-RAG, and Edge SLM execution.</p>
+          </div>
+        </div>
+
+        {/* Timeline Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          
+          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">2020 - 2022</div>
+            <h4 className="text-sm font-bold text-cyan-400">Phase 1: Naive Vector RAG</h4>
+            <p className="text-[11px] text-slate-400 leading-relaxed">
+              Simple text chunking + dense vector embeddings. Basic Cosine Similarity retrieval directly injected into LLM context window. High risk of context noise.
+            </p>
+          </div>
+
+          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">2023 - 2024</div>
+            <h4 className="text-sm font-bold text-purple-400">Phase 2: Advanced Hybrid RAG</h4>
+            <p className="text-[11px] text-slate-400 leading-relaxed">
+              Dense Vector + Sparse BM25 Keyword Search combined via Reciprocal Rank Fusion (RRF). Cross-Encoder Re-ranking (Cohere/BGE) and prompt compression.
+            </p>
+          </div>
+
+          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">2025 - 2026 (NOW)</div>
+            <h4 className="text-sm font-bold text-emerald-400">Phase 3: GraphRAG & Agentic Self-RAG</h4>
+            <p className="text-[11px] text-slate-400 leading-relaxed">
+              Knowledge Graph entity relationship extraction (Microsoft GraphRAG) combined with Agentic Self-Reflection (Corrective RAG) and NotebookLLM Audio Synthesis.
+            </p>
+          </div>
+
+          <div className="bg-slate-950 p-4 rounded-xl border border-amber-500/30 space-y-2 bg-amber-950/10">
+            <div className="text-[10px] font-bold text-amber-400 uppercase tracking-wider">2026+ FUTURE HORIZON</div>
+            <h4 className="text-sm font-bold text-amber-400">Phase 4: Air-Gapped Edge SLM RAG</h4>
+            <p className="text-[11px] text-slate-400 leading-relaxed">
+              Zero-cloud telemetry on-device 4-bit SLMs (Phi-3, Gemma) executing sub-100ms RAG locally, plus Zero-Knowledge Federated RAG across microservices.
+            </p>
+          </div>
+
+        </div>
+
+        {/* 4 Deep Dive Cutting-Edge RAG Innovations */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-800">
+          
+          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-2">
+            <div className="flex items-center space-x-2 text-cyan-400 font-bold text-xs">
+              <Flame className="w-4 h-4" />
+              <span>1. GraphRAG (Knowledge Graph Augmented Generation)</span>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Traditional vector search finds passages similar to a query, but fails at high-level thematic questions (*"What are the global security vulnerabilities across all our products?"*). GraphRAG extracts entities, relationships, and semantic communities, enabling global document understanding.
+            </p>
+          </div>
+
+          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-2">
+            <div className="flex items-center space-x-2 text-purple-400 font-bold text-xs">
+              <Sparkles className="w-4 h-4" />
+              <span>2. Agentic RAG & Dynamic Self-Correction (Self-RAG)</span>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Instead of fixed sequential pipelines, AI agents evaluate retrieved context quality before answering. If information is missing or noisy, the agent autonomously executes query expansion, web search tools, or code execution before delivering the final grounded response.
+            </p>
+          </div>
+
+          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-2">
+            <div className="flex items-center space-x-2 text-emerald-400 font-bold text-xs">
+              <Lock className="w-4 h-4" />
+              <span>3. Edge SLM RAG with Zero Cloud Telemetry</span>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Small Language Models (1B–7B parameters) running 4-bit quantized (GGUF/AWQ) on local devices allow military SOCs, healthcare providers, and financial firms to run RAG completely air-gapped without sending sensitive corporate context to third-party cloud APIs.
+            </p>
+          </div>
+
+          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-2">
+            <div className="flex items-center space-x-2 text-amber-400 font-bold text-xs">
+              <Radio className="w-4 h-4" />
+              <span>4. Multimodal Audio & Studio Overview (NotebookLLM)</span>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              RAG has expanded beyond plain text into multi-modal synthesis. Systems can ingest raw PDFs, code repositories, and audio transcripts to generate interactive 2-host audio podcasts, study guides, and executive briefing audio streams on demand.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Section 3: End-to-End RAG Architecture Diagram */}
       <div className="bg-slate-900/80 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6 shadow-xl">
         <div className="flex items-center space-x-3 border-b border-slate-800 pb-4">
           <Workflow className="w-6 h-6 text-indigo-400" />
@@ -121,7 +249,7 @@ export default function OverviewPage({ onNavigateTab, onOpenIngest }) {
               <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 flex flex-col items-center justify-center space-y-2">
                 <FileText className="w-7 h-7 text-cyan-400" />
                 <span className="text-xs font-bold text-slate-200">1. Enterprise Data</span>
-                <span className="text-[10px] text-slate-400">PDFs, JSON logs, Threat Intel, CVEs</span>
+                <span className="text-[10px] text-slate-400">PDFs, JSON logs, Agile Playbooks, CVEs</span>
               </div>
 
               <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 flex flex-col items-center justify-center space-y-2 relative">
@@ -166,7 +294,7 @@ export default function OverviewPage({ onNavigateTab, onOpenIngest }) {
               <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 flex flex-col items-center justify-center space-y-2">
                 <Search className="w-7 h-7 text-emerald-400" />
                 <span className="text-xs font-bold text-slate-200">1. User Query</span>
-                <span className="text-[10px] text-slate-400">Natural language threat question</span>
+                <span className="text-[10px] text-slate-400">Natural language threat/Agile question</span>
               </div>
 
               <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 flex flex-col items-center justify-center space-y-2">
@@ -193,133 +321,34 @@ export default function OverviewPage({ onNavigateTab, onOpenIngest }) {
         </div>
       </div>
 
-      {/* Section 3: RAG Architectural Evolution (Naive vs Advanced vs Modular) */}
-      <div className="bg-slate-900/80 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6 shadow-xl">
-        <div className="flex items-center space-x-3 border-b border-slate-800 pb-4">
-          <GitBranch className="w-6 h-6 text-purple-400" />
-          <div>
-            <h2 className="text-xl font-bold text-slate-100">Evolution of RAG Architectural Paradigms</h2>
-            <p className="text-xs text-slate-400">How RAG architectures evolved from simple indexing to advanced agentic routing.</p>
-          </div>
-        </div>
-
-        {/* Interactive Paradigm Selector */}
-        <div className="flex space-x-2 bg-slate-950 p-1.5 rounded-xl border border-slate-800 overflow-x-auto">
-          <button
-            onClick={() => setActiveParadigm("naive")}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition whitespace-nowrap ${
-              activeParadigm === "naive" ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30" : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            1. Naive RAG (Basic)
-          </button>
-          <button
-            onClick={() => setActiveParadigm("advanced")}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition whitespace-nowrap ${
-              activeParadigm === "advanced" ? "bg-purple-500/20 text-purple-400 border border-purple-500/30" : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            2. Advanced RAG (Pre/Post Processing)
-          </button>
-          <button
-            onClick={() => setActiveParadigm("modular")}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition whitespace-nowrap ${
-              activeParadigm === "modular" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            3. Modular & Agentic RAG (Modern)
-          </button>
-        </div>
-
-        {/* Paradigm Details Card */}
-        {activeParadigm === "naive" && (
-          <div className="bg-slate-950 p-5 rounded-xl border border-cyan-500/30 space-y-3">
-            <h3 className="font-bold text-sm text-cyan-400">Naive RAG Architecture: Indexing ➔ Retrieval ➔ Generation</h3>
-            <p className="text-xs text-slate-300 leading-relaxed font-sans">
-              The classic traditional approach. Raw text is chunked into fixed-length blocks, embedded into a vector database, and matched against queries using raw Cosine Similarity. While simple to implement, Naive RAG suffers from low precision when chunk sizes are suboptimal or when queries require multi-step reasoning.
-            </p>
-            <div className="text-[11px] text-slate-400 font-mono bg-slate-900 p-3 rounded-lg border border-slate-800">
-              Flow: Document ➔ Fixed Chunking ➔ Embedding ➔ Top-K Vector Search ➔ LLM Prompt ➔ Answer
-            </div>
-          </div>
-        )}
-
-        {activeParadigm === "advanced" && (
-          <div className="bg-slate-950 p-5 rounded-xl border border-purple-500/30 space-y-3">
-            <h3 className="font-bold text-sm text-purple-400">Advanced RAG Architecture: Pre-Retrieval ➔ Hybrid Search ➔ Post-Retrieval Re-ranking</h3>
-            <p className="text-xs text-slate-300 leading-relaxed font-sans">
-              Designed to solve precision and context fragmentation issues. Introduces <strong>Pre-Retrieval techniques</strong> (Query Expansion, HyDE hypothesis embeddings) and <strong>Post-Retrieval techniques</strong> (Cross-Encoder Re-ranking, Context Compression, Sentence Windowing). This powers the hybrid search engine in CyberRAG Studio.
-            </p>
-            <div className="text-[11px] text-slate-400 font-mono bg-slate-900 p-3 rounded-lg border border-slate-800">
-              Flow: Query Expansion ➔ Dense Vector + Sparse BM25 Search ➔ Reciprocal Rank Fusion (RRF) ➔ Re-ranker ➔ Prompt Compression ➔ LLM
-            </div>
-          </div>
-        )}
-
-        {activeParadigm === "modular" && (
-          <div className="bg-slate-950 p-5 rounded-xl border border-emerald-500/30 space-y-3">
-            <h3 className="font-bold text-sm text-emerald-400">Modular & Agentic RAG Architecture: Dynamic Routing ➔ Knowledge Graphs ➔ Multi-Agent Synthesis</h3>
-            <p className="text-xs text-slate-300 leading-relaxed font-sans">
-              The modern state-of-the-art paradigm. Replaces static sequential pipelines with <strong>autonomous AI Agents</strong> that dynamically decide whether to query a vector store, search a Knowledge Graph (GraphRAG), invoke web APIs, or execute local code based on intent routing.
-            </p>
-            <div className="text-[11px] text-slate-400 font-mono bg-slate-900 p-3 rounded-lg border border-slate-800">
-              Flow: Query ➔ Intent Router Agent ➔ [Vector DB | Knowledge Graph | Local SLM Tool] ➔ Evaluator Guardrail ➔ Final Answer
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Section 4: The RAG Triad Evaluation Framework */}
-      <div className="bg-slate-900/80 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6 shadow-xl">
-        <div className="flex items-center space-x-3 border-b border-slate-800 pb-4">
-          <Award className="w-6 h-6 text-amber-400" />
-          <div>
-            <h2 className="text-xl font-bold text-slate-100">The RAG Triad: Evaluating Grounding Quality</h2>
-            <p className="text-xs text-slate-400">The 3 mandatory pillars to prevent hallucinations and measure RAG fidelity.</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-2">
-            <div className="text-xs font-bold text-cyan-400">1. Context Relevance</div>
-            <h4 className="font-bold text-sm text-slate-100">Is Retrieved Context Relevant?</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Measures whether the Top-K document chunks retrieved from the vector database actually contain the information necessary to answer the user query.
-            </p>
-          </div>
-
-          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-2">
-            <div className="text-xs font-bold text-purple-400">2. Grounded Faithfulness</div>
-            <h4 className="font-bold text-sm text-slate-100">Is Answer Grounded in Context?</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Verifies that every claim in the generated answer is strictly derived from retrieved context without introducing unverified model hallucinations.
-            </p>
-          </div>
-
-          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-2">
-            <div className="text-xs font-bold text-emerald-400">3. Answer Relevance</div>
-            <h4 className="font-bold text-sm text-slate-100">Does Answer Address Query?</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Ensures that the final generated response directly answers the original user question completely and concisely.
-            </p>
-          </div>
-
-        </div>
-      </div>
-
-      {/* Section 5: How to Use This Portal & Available Tools */}
+      {/* Section 4: How to Use This Portal & Available Tools */}
       <div className="bg-slate-900/80 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6 shadow-xl">
         <div className="flex items-center space-x-3 border-b border-slate-800 pb-4">
           <Layers className="w-6 h-6 text-emerald-400" />
           <div>
             <h2 className="text-xl font-bold text-slate-100">How to Use This Portal & Available Tools</h2>
-            <p className="text-xs text-slate-400">Guide to navigating the 5 core interactive workspaces in CyberRAG Studio.</p>
+            <p className="text-xs text-slate-400">Guide to navigating the interactive workspaces in Cyber & Agile RAG Studio.</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           
+          <div 
+            onClick={handleLaunchAgileRAG}
+            className="bg-slate-950 hover:bg-slate-900 p-5 rounded-xl border border-emerald-500/40 hover:border-emerald-400 transition cursor-pointer space-y-2 group shadow-lg"
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-sm text-emerald-400 flex items-center space-x-2">
+                <Rocket className="w-4 h-4" />
+                <span>1. Agile Coaching & Scrum RAG</span>
+              </span>
+              <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-emerald-400 transition" />
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Query SAFe 6.0, LeSS, Lyssa Adkins Coaching Framework, Patrick Lencioni 5 Dysfunctions, WSJF/RICE prioritization, and 2020 Scrum Rules with source grounding.
+            </p>
+          </div>
+
           <div 
             onClick={() => onNavigateTab("workbench")}
             className="bg-slate-950 hover:bg-slate-900 p-5 rounded-xl border border-slate-800 hover:border-cyan-500/40 transition cursor-pointer space-y-2 group"
@@ -327,12 +356,12 @@ export default function OverviewPage({ onNavigateTab, onOpenIngest }) {
             <div className="flex items-center justify-between">
               <span className="font-bold text-sm text-cyan-400 flex items-center space-x-2">
                 <ShieldCheck className="w-4 h-4" />
-                <span>1. Threat RAG Workbench</span>
+                <span>2. Cybersecurity & AI Threat Workbench</span>
               </span>
               <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition" />
             </div>
             <p className="text-xs text-slate-300 leading-relaxed">
-              Execute natural language queries across cybersecurity datasets. Inspect grounded answers, relevance match scores, and verified source citations.
+              Execute natural language queries across MITRE ATT&CK, OWASP Top 10 for LLMs, and CVE databases with similarity scores and citations.
             </p>
           </div>
 
@@ -343,7 +372,7 @@ export default function OverviewPage({ onNavigateTab, onOpenIngest }) {
             <div className="flex items-center justify-between">
               <span className="font-bold text-sm text-purple-400 flex items-center space-x-2">
                 <Zap className="w-4 h-4" />
-                <span>2. LLM vs SLM Arena</span>
+                <span>3. LLM vs SLM Arena</span>
               </span>
               <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition" />
             </div>
@@ -359,12 +388,12 @@ export default function OverviewPage({ onNavigateTab, onOpenIngest }) {
             <div className="flex items-center justify-between">
               <span className="font-bold text-sm text-emerald-400 flex items-center space-x-2">
                 <Radio className="w-4 h-4" />
-                <span>3. NotebookLLM Studio</span>
+                <span>4. NotebookLLM Studio</span>
               </span>
               <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-emerald-400 transition" />
             </div>
             <p className="text-xs text-slate-300 leading-relaxed">
-              Listen to AI-synthesized audio podcasts featuring two AI hosts debating technical security documents, complete with voice playback and equalizer waveforms.
+              Listen to AI-synthesized audio podcasts featuring two AI hosts debating technical security and agile documents, complete with voice playback.
             </p>
           </div>
 
@@ -375,28 +404,12 @@ export default function OverviewPage({ onNavigateTab, onOpenIngest }) {
             <div className="flex items-center justify-between">
               <span className="font-bold text-sm text-amber-400 flex items-center space-x-2">
                 <Layers className="w-4 h-4" />
-                <span>4. Chunking & Token Lab</span>
+                <span>5. Chunking & Token Lab</span>
               </span>
               <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 transition" />
             </div>
             <p className="text-xs text-slate-300 leading-relaxed">
               Adjust chunk size (10–100 tokens) and sliding window overlap sliders to inspect how document text is tokenized into vectors live.
-            </p>
-          </div>
-
-          <div 
-            onClick={() => onNavigateTab("vectorspace")}
-            className="bg-slate-950 hover:bg-slate-900 p-5 rounded-xl border border-slate-800 hover:border-indigo-500/40 transition cursor-pointer space-y-2 group"
-          >
-            <div className="flex items-center justify-between">
-              <span className="font-bold text-sm text-indigo-400 flex items-center space-x-2">
-                <Database className="w-4 h-4" />
-                <span>5. Vector Space Canvas</span>
-              </span>
-              <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-indigo-400 transition" />
-            </div>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Inspect 2D PCA vector projections in real time. Hover over document vector nodes to view similarity distances and text payloads.
             </p>
           </div>
 

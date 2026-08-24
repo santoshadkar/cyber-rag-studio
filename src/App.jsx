@@ -119,9 +119,11 @@ export default function App() {
         {activeTab === "overview" && (
           <OverviewPage
             onNavigateTab={(tabId) => setActiveTab(tabId)}
+            setSelectedDomain={setSelectedDomain}
             onOpenIngest={() => setIsIngestOpen(true)}
           />
         )}
+
 
         {/* Tab 1: Cybersecurity & AI Threat Workbench */}
         {activeTab === "workbench" && (
@@ -132,8 +134,11 @@ export default function App() {
             ragResult={ragResult}
             modelResponses={modelResponses}
             presetQueries={presetQueries}
+            selectedDomain={selectedDomain}
+            setSelectedDomain={setSelectedDomain}
           />
         )}
+
 
         {/* Tab 2: LLMs vs SLMs Arena */}
         {activeTab === "arena" && (

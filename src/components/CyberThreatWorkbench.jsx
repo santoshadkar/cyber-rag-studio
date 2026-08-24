@@ -8,22 +8,63 @@ export default function CyberThreatWorkbench({
   onExecuteQuery, 
   ragResult, 
   modelResponses, 
-  presetQueries 
+  presetQueries,
+  selectedDomain,
+  setSelectedDomain
 }) {
+  const domainButtons = [
+    { id: "all", label: "⚡ All Knowledge" },
+    { id: "agileCoach", label: "🚀 Agile Coaching & Scrum" },
+    { id: "cybersecurity", label: "🛡️ Cyber Threat Intel" },
+    { id: "aiSecurity", label: "🔒 AI & LLM Security" },
+    { id: "slmVsLlm", label: "⚡ SLMs vs LLMs" },
+    { id: "notebookLlm", label: "🎙️ NotebookLLM Studio" }
+  ];
+
   return (
     <div className="space-y-6">
       
-      {/* Search Bar & Preset Queries Section */}
+      {/* Search Bar & Domain Selection Section */}
       <div className="bg-slate-900/90 rounded-2xl border border-slate-800 p-6 shadow-2xl space-y-4 backdrop-blur-xl">
+        
+        {/* Domain Buttons Bar */}
+        <div className="space-y-2 border-b border-slate-800 pb-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Select RAG Knowledge Domain:</span>
+            <span className="text-[11px] text-cyan-400 font-mono font-bold">
+              Active: {domainButtons.find(d => d.id === selectedDomain)?.label || "⚡ All Knowledge"}
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {domainButtons.map((db) => {
+              const isActive = selectedDomain === db.id;
+              return (
+                <button
+                  key={db.id}
+                  onClick={() => setSelectedDomain(db.id)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer ${
+                    isActive
+                      ? "bg-cyan-500 text-slate-950 shadow-cyan-500/20"
+                      : "bg-slate-950 text-slate-300 border border-slate-800 hover:border-slate-700 hover:text-white"
+                  }`}
+                >
+                  {db.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="flex items-center justify-between">
           <label className="text-sm font-bold text-slate-100 flex items-center space-x-2">
             <ShieldAlert className="w-5 h-5 text-cyan-400" />
-            <span>Cybersecurity & AI Threat Intelligence RAG Search</span>
+            <span>Multi-Domain Hybrid RAG Knowledge Assistant</span>
           </label>
           <span className="text-xs text-slate-500 font-mono">
-            Semantic Vector + BM25 Hybrid Engine
+            Semantic Vector + BM25 Engine
           </span>
         </div>
+
 
         {/* Input Bar */}
         <div className="relative flex items-center">
