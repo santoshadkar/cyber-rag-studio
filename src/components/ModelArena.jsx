@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { GitCompare, Cpu, ShieldCheck, Zap, DollarSign, Award, Clock, HardDrive, CheckCircle2 } from "lucide-react";
+import { cleanText } from "../utils/ragEngine";
 
 export default function ModelArena({ modelResponses, query }) {
   const [activeTab, setActiveTab] = useState("compare");
@@ -123,7 +124,7 @@ export default function ModelArena({ modelResponses, query }) {
           </div>
 
           <div className="bg-slate-900/90 rounded-lg p-3 border border-slate-800 text-xs text-slate-200 leading-relaxed font-mono whitespace-pre-line">
-            {llm.response}
+            {cleanText(llm.response)}
           </div>
 
           <div className="flex items-center justify-between text-xs pt-2 text-slate-400 border-t border-slate-900">
@@ -147,8 +148,9 @@ export default function ModelArena({ modelResponses, query }) {
           </div>
 
           <div className="bg-slate-900/90 rounded-lg p-3 border border-slate-800 text-xs text-slate-200 leading-relaxed font-mono whitespace-pre-line">
-            {slm.response}
+            {cleanText(slm.response)}
           </div>
+
 
           <div className="flex items-center justify-between text-xs pt-2 text-slate-400 border-t border-slate-900">
             <span className="flex items-center space-x-1">

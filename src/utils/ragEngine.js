@@ -4,12 +4,19 @@ import { slmVsLlmKnowledge } from "../data/slmVsLlmKnowledge";
 import { notebookLlmKnowledge } from "../data/notebookLlmKnowledge";
 import { tokenize, getTF, cosineSimilarity } from "./vectorMath";
 
+// Helper to strip double asterisks (**) from text
+export function cleanText(str) {
+  if (typeof str !== "string") return str;
+  return str.replace(/\*\*/g, "");
+}
+
 export const ALL_DOMAINS = {
   cybersecurity: { name: "Cybersecurity Threat Intel", data: cybersecurityKnowledge, badge: "CYBER" },
   aiSecurity: { name: "AI & LLM Security", data: aiSecurityKnowledge, badge: "AI-SEC" },
   slmVsLlm: { name: "SLMs vs LLMs Architecture", data: slmVsLlmKnowledge, badge: "SLM/LLM" },
   notebookLlm: { name: "NotebookLLM Studio", data: notebookLlmKnowledge, badge: "NOTEBOOK" }
 };
+
 
 // Chunk text according to size and overlap settings
 export function chunkDocument(documentText, chunkSize = 300, overlap = 50) {
@@ -124,36 +131,39 @@ export function generateModelResponses(query, retrievedChunks) {
     snippet: c.text.substring(0, 180) + "..."
   }));
 
+  // Helper to remove double asterisks (**) from text
+  const removeBoldMarkers = (str) => typeof str === "string" ? str.replace(/\*\*/g, "") : str;
+
   // Synthesis engine responses simulation
-  const gpt4oResponse = `Based on the ingested threat intelligence and framework documentation [Source 1]:
+  const gpt4oResponse = removeBoldMarkers(`Based on the ingested threat intelligence and framework documentation [Source 1]:
 
 ${retrievedChunks[0]?.text.split('\n')[0] || "Target domain knowledge verified."}
 
-**Key Analysis & Action Items:**
-1. **Architectural Guardrails**: Enforce strict isolation as specified in [Source 1]. ${retrievedChunks[1] ? `Furthermore, [Source 2] highlights that "${retrievedChunks[1].text.substring(0, 120)}..."` : ''}
-2. **Mitigation Strategy**: Implement dual-LLM validation, continuous SIEM telemetry monitoring, and zero-trust policy enforcement points.
-3. **Grounding Verification**: High confidence score (${(retrievedChunks[0]?.finalScore * 100).toFixed(1)}%) across retrieved knowledge bases.`;
+Key Analysis & Action Items:
+1. Architectural Guardrails: Enforce strict isolation as specified in [Source 1]. ${retrievedChunks[1] ? `Furthermore, [Source 2] highlights that "${retrievedChunks[1].text.substring(0, 120)}..."` : ''}
+2. Mitigation Strategy: Implement dual-LLM validation, continuous SIEM telemetry monitoring, and zero-trust policy enforcement points.
+3. Grounding Verification: High confidence score (${(retrievedChunks[0]?.finalScore * 100).toFixed(1)}%) across retrieved knowledge bases.`);
 
-  const phi3Response = `[Local SLM - Phi-3 Mini 3.8B execution output]:
+  const phi3Response = removeBoldMarkers(`[Local SLM - Phi-3 Mini 3.8B execution output]:
 
 Analysis of "${query}":
 - Main finding: ${retrievedChunks[0]?.text.substring(0, 150)}... [Source 1]
 - Recommendation: Deploy 4-bit quantized edge models for air-gapped security operations to prevent data leakage and system prompt exposure.
-- Execution Stats: 0.14s latency, 142 tokens/sec, 3.4 GB VRAM used.`;
+- Execution Stats: 0.14s latency, 142 tokens/sec, 3.4 GB VRAM used.`);
 
   const notebookLlmResponse = {
-    summary: `Executive Notebook Briefing on "${query}":\n\n` +
-      retrievedChunks.map((c, i) => `• [Ref ${i+1}] ${c.docTitle}: ${c.text.substring(0, 130)}...`).join("\n"),
+    summary: removeBoldMarkers(`Executive Notebook Briefing on "${query}":\n\n` +
+      retrievedChunks.map((c, i) => `• [Ref ${i+1}] ${c.docTitle}: ${c.text.substring(0, 130)}...`).join("\n")),
     podcastScript: [
-      { speaker: "Host A (Analytical Lead)", text: `Hey everyone! Today we're diving deep into our security repository to address: "${query}".` },
-      { speaker: "Host B (Tech Specialist)", text: `Right! And looking at our primary source document, ${retrievedChunks[0]?.docTitle || "our intelligence data"}, the data is super clear.` },
-      { speaker: "Host A (Analytical Lead)", text: `Exactly. It says right here: "${retrievedChunks[0]?.text.substring(0, 140)}...". That's a huge deal for enterprise security!` },
-      { speaker: "Host B (Tech Specialist)", text: `Wait, so how does that compare with Small Language Models vs Cloud LLMs?` },
-      { speaker: "Host A (Analytical Lead)", text: `SLMs running locally completely eliminate cloud telemetry exposure, keeping enterprise context strictly on-premise!` }
+      { speaker: "Host A (Analytical Lead)", text: removeBoldMarkers(`Hey everyone! Today we're diving deep into our security repository to address: "${query}".`) },
+      { speaker: "Host B (Tech Specialist)", text: removeBoldMarkers(`Right! And looking at our primary source document, ${retrievedChunks[0]?.docTitle || "our intelligence data"}, the data is super clear.`) },
+      { speaker: "Host A (Analytical Lead)", text: removeBoldMarkers(`Exactly. It says right here: "${retrievedChunks[0]?.text.substring(0, 140)}...". That's a huge deal for enterprise security!`) },
+      { speaker: "Host B (Tech Specialist)", text: removeBoldMarkers(`Wait, so how does that compare with Small Language Models vs Cloud LLMs?`) },
+      { speaker: "Host A (Analytical Lead)", text: removeBoldMarkers(`SLMs running locally completely eliminate cloud telemetry exposure, keeping enterprise context strictly on-premise!`) }
     ],
     faq: [
-      { q: `What is the primary risk associated with ${query}?`, a: `${retrievedChunks[0]?.text.substring(0, 180)}... [Source 1]` },
-      { q: `How do we verify source grounding?`, a: `By inspecting chunk similarity scores (${(retrievedChunks[0]?.finalScore * 100).toFixed(1)}%) and cross-referencing text boundaries.` }
+      { q: removeBoldMarkers(`What is the primary risk associated with ${query}?`), a: removeBoldMarkers(`${retrievedChunks[0]?.text.substring(0, 180)}... [Source 1]`) },
+      { q: removeBoldMarkers(`How do we verify source grounding?`), a: removeBoldMarkers(`By inspecting chunk similarity scores (${(retrievedChunks[0]?.finalScore * 100).toFixed(1)}%) and cross-referencing text boundaries.`) }
     ]
   };
 
@@ -183,3 +193,4 @@ Analysis of "${query}":
     }
   };
 }
+

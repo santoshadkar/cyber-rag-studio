@@ -1,5 +1,6 @@
 import React from "react";
 import { ShieldAlert, Search, Sparkles, ExternalLink, Hash, Bookmark, ArrowRight, CheckCircle } from "lucide-react";
+import { cleanText } from "../utils/ragEngine";
 
 export default function CyberThreatWorkbench({ 
   query, 
@@ -83,7 +84,7 @@ export default function CyberThreatWorkbench({
               </div>
 
               <div className="bg-slate-950/80 rounded-xl p-4 border border-slate-800/80 text-xs text-slate-200 leading-relaxed font-sans whitespace-pre-line space-y-3">
-                {modelResponses.models.llm.response}
+                {cleanText(modelResponses.models.llm.response)}
               </div>
             </div>
 
@@ -110,8 +111,9 @@ export default function CyberThreatWorkbench({
                     </div>
 
                     <p className="text-xs text-slate-300 leading-relaxed font-mono italic bg-slate-900/60 p-3 rounded-lg border border-slate-800">
-                      "{chunk.text}"
+                      "{cleanText(chunk.text)}"
                     </p>
+
 
                     <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
                       <div className="flex items-center space-x-2">
